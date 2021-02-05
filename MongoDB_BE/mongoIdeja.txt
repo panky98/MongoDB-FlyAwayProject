@@ -1,0 +1,82 @@
+Dusan:
+letove
+	destinacija
+	polazniAerodrom
+	dolazniAerodrom
+	vreme
+	ukupanBrSedista
+	List<ObjectId> listaRezervacija
+	ObjectId avioKompanija
+Dusan:
+Avio kompanija
+	ObjectId
+	Naziv
+	GodinaOsnivanja
+	GradPredstavnistva
+	List<ObjectId> letovi
+	List<ObjectId> komentari
+Lena:
+komentari
+	//ObjectId PutnikID
+	imeprezime
+	tekst
+
+Panic:
+rezervacija
+	brojSedista...19, 20, 30
+	kopijaPasosa:img
+	kovidTest i slicno
+	statusRezervacije...enum/string...Pending...
+	kodRezervacije..."RE"-datum.
+	List<ObjectId> listaProizvoda
+	List<ObjectId> listaKofera
+	ObjectId Putnik
+	ObjectId let
+Lena:
+Putnik
+	ime
+	prezime
+	godinaRodjenja
+	pol
+	List<ObjectId> listaRezervacija
+Andjela:
+Kofer
+	tip...srednji veliki mali
+	tezina
+	rucniPrtljag:bool
+	ObjectId Rezervacija
+
+Andjela:
+proizvod
+	tip:hrana, pice, parfemi
+	cena
+	kolicina
+	slika
+
+
+
+MyAwayPlane
+Web aplikacija za pretraživanje i rezervaciju letova. Nakon odabira leta sledi deo gde se unose lični podaci kao i neophodni fajlovi. Tok rezervacije uključuje i izbor dodataka iz kataloga koji mogu da se uključe u rezervaciju.
+
+
+
+
+Blanket
+	slika
+	fakultet
+	smer
+	rok
+
+Resenje
+	idBlanketa
+	ocena
+	komentari
+
+
+Komentar
+
+Fakultet
+
+
+
+
