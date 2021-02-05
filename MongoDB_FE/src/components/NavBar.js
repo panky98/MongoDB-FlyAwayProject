@@ -12,7 +12,12 @@ function NavBar() {
             <Link to="/">
                 Fly Away
             </Link>
-          </li>      
+          </li>  
+          <li class="navbar-brand">
+            <Link to="/kreiraj-putnika">
+                DodajPutnika
+            </Link>
+          </li>       
         </ul>
       </nav>
       </div>
