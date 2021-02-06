@@ -2,6 +2,7 @@
 using DataLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,21 @@ namespace MongoDB_BE.Controllers
 
         }
 
+        [HttpGet]
+        [Route("VratiPutnikeSaLetom/{kod}")]
+        public ActionResult VratiPutnikeSaLetom([FromRoute(Name ="kod")] String kod)
+        {
+            try
+            {
+                return new JsonResult(DataProvider.VratiPutnikeSaLetom(kod));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+
+        }
+
         [HttpPost]
         [Route("KreirajKolekcijuPutnika")]
         public ActionResult KreirajKolekcijuPutnika()
@@ -63,17 +79,54 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
+                DataProvider.KreirajPutnika(putnik);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
 
-                Putnik putnik1 = new Putnik
-                {
-                    Id = putnik.Id,
-                    ime = putnik.ime,
-                    prezime = putnik.prezime,
-                    godinaRodjenja = putnik.godinaRodjenja, 
-                    pol = putnik.pol
-                };
+        [HttpDelete]
+        [Route("ObrisiPutnika/{jmbg}")]
+        public ActionResult ObrisiPutnika([FromRoute(Name = "jmbg")] String jmbg)
+        {
+            try
+            {
+                DataProvider.ObrisiPutnika(jmbg);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
 
-                DataProvider.KreirajPutnika(putnik1);
+        [HttpPut]
+        [Route("DodajRezervacijuPutniku/{kod}/{jmbg}")]
+        public ActionResult DodajRezervacijuPutniku([FromRoute(Name = "kod")] String kod, 
+                                                          [FromRoute(Name = "jmbg")] String jmbg)
+        {
+            try
+            {
+                DataProvider.DodajRezervacijuPutniku(kod, jmbg);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
+
+        [HttpPut]
+        [Route("AzurirajPutnika/{jmbg}/{prezime}")]
+        public ActionResult AzurirajPutnika([FromRoute(Name = "jmbg")] String jmbg,
+                                                    [FromRoute(Name = "prezime")] string prezime)
+        {
+            try
+            {
+                DataProvider.AzurirajPutnika(jmbg, prezime);
                 return Ok();
             }
             catch (Exception e)

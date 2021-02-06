@@ -7,6 +7,7 @@ import './App.css';
 import NavBar from './components/NavBar.js';
 import Error from './components/Error.js';
 import Home from './components/Home.js';
+import CreatePutnikForm from './components/CreatePutnikForm';
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
     <Switch>
       <Route exact path="/">
         <Home/>
+      </Route>
+      <Route path="/kreiraj-putnika">
+        <CreatePutnikForm/>
       </Route>
       <Route  path="*">
         <Error />

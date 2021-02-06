@@ -17,5 +17,10 @@ namespace DataLayer.Models
         public IList<ObjectId> ListaKofera { get; set; }
         public ObjectId Putnik { get; set; }
         public ObjectId Let { get; set; }
+
+        public static explicit operator Rezervacija(ObjectId v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
