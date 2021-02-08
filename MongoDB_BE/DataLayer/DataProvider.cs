@@ -221,5 +221,87 @@ namespace DataLayer
             db.GetCollection<Komentar>("komentari").DeleteOne(x => x.Id == komentarId);
         }
         #endregion
+
+        #region Kofer
+        public static void KreirajKolekcijuKofera()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Kofer>("koferi");
+        }
+
+        public static List<Kofer> VratiSveKofere()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Kofer>("koferi");
+
+            List<Kofer> koferi = new List<Kofer>();
+
+            foreach (Kofer kofer in collection.Find(x => true).ToList())
+            {
+                koferi.Add(kofer);
+            }
+
+            return koferi;
+        }
+
+        public static void KreirajKofer(Kofer kofer)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Kofer>("koferi");
+            collection.InsertOne(kofer);
+        }
+
+        //azuriraj
+        public static void AzurirajTipKofera(ObjectId idPro, string newTip)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Kofer>.Filter.Eq(x => x.Id, idPro);
+            var update = Builders<Kofer>.Update.Set(x => x.tip, newTip);
+
+            db.GetCollection<Kofer>("koferi").UpdateOne(filter, update);
+        }
+
+        public static void ObrisiKofer(ObjectId koferId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Kofer>("koferi").DeleteOne(x => x.Id == koferId);
+        }
+
+
+        #endregion
+
+        #region Proizvod
+        public static void KreirajKolekcijuProizvoda()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Proizvod>("proizvodi");
+        }
+
+        public static void KreirajProizvod(Proizvod p)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Proizvod>("proizvodi");
+            collection.InsertOne(p);
+        }
+
+        public static IList<Proizvod> VratiProizvode()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Proizvod>("proizvodi").Find(x => true).ToList<Proizvod>();
+        }
+        public static void ObrisiProizvod(ObjectId proizvodId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Komentar>("proizvodi").DeleteOne(x => x.Id == proizvodId);
+        }
+        public static void AzurirajKolicinuProizvoda(ObjectId idPro, int newKol)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Proizvod>.Filter.Eq(x => x.Id, idPro);
+            var update = Builders<Proizvod>.Update.Set(x => x.kolicina, newKol);
+
+            db.GetCollection<Proizvod>("proizvodi").UpdateOne(filter, update);
+        }
+        #endregion
     }
 }
