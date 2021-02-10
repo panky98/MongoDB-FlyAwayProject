@@ -14,9 +14,9 @@ namespace MongoDB_BE.Controllers
     [Route("[controller]")]
     public class KoferController : ControllerBase
     {
-        [HttpPost]
+       /* [HttpPost]
         [Route("KreirajKolekcijuKofera")]
-        public ActionResult KreirajKolekcijuKofera()
+       public ActionResult KreirajKolekcijuKofera()
         {
             try
             {
@@ -27,7 +27,7 @@ namespace MongoDB_BE.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
             }
-        }
+        }*/
 
         [HttpGet]
         [Route("VratiSveKofere")]
@@ -60,11 +60,11 @@ namespace MongoDB_BE.Controllers
 
         [HttpDelete]
         [Route("ObrisiKofer/{koferId}")]
-        public ActionResult ObrisiKofer([FromRoute(Name = "koferId")] ObjectId koferId)
+        public ActionResult ObrisiKofer([FromRoute(Name = "koferId")] string koferId)
         {
             try
             {
-                DataProvider.ObrisiKofer(koferId);
+                DataProvider.ObrisiKofer(new ObjectId(koferId));
                 return Ok();
             }
             catch (Exception e)
@@ -75,12 +75,12 @@ namespace MongoDB_BE.Controllers
 
         [HttpPut]
         [Route("AzurirajTipKofera/{idKofera}/{newTip}")]
-        public ActionResult AzurirajTipKofera([FromRoute(Name = "idKofera")] ObjectId idKofera,
+        public ActionResult AzurirajTipKofera([FromRoute] string idKofera,
                                                             [FromRoute(Name = "newTip")] string newTip)
         {
             try
             {
-                DataProvider.AzurirajTipKofera(idKofera, newTip);
+                DataProvider.AzurirajTipKofera(new ObjectId(idKofera), newTip);
                 return Ok();
             }
             catch (Exception e)
