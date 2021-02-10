@@ -10,7 +10,6 @@ namespace DataLayer.Models
         public int cena { get; set; }
         public string SlikaBytesBase64 { get; set; }
         public string tip { get; set; }
-
-        public int  kolicina { get; set; }
+        public int kolicina { get; set; }
     }
 }

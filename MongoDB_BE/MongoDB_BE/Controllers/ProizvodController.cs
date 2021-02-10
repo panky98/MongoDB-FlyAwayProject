@@ -15,7 +15,7 @@ namespace MongoDB_BE.Controllers
     [ApiController]
     public class ProizvodController : ControllerBase
     {
-       /* [HttpPost]
+        [HttpPost]
         [Route("KreirajKolekcijuProizvoda")]
         public ActionResult KreirajKolekcijuProizvoda()
         {
@@ -28,7 +28,7 @@ namespace MongoDB_BE.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
             }
-        }*/
+        }
 
         [HttpPost]
         [Route("KreirajProizvod")]
@@ -39,7 +39,7 @@ namespace MongoDB_BE.Controllers
                 Proizvod p = new Proizvod
                 {
                     Id = proizvod.Id,
-                    cena = proizvod.cena,
+                    cena= proizvod.cena,
                     SlikaBytes = Convert.FromBase64String(proizvod.SlikaBytesBase64),
                     tip = proizvod.tip,
                     kolicina = proizvod.kolicina
@@ -70,12 +70,12 @@ namespace MongoDB_BE.Controllers
 
         [HttpPut]
         [Route("AzurirajKolicinuProizvoda/{idProizvoda}/{newKolicina}")]
-        public ActionResult AzurirajStatusRezervaciji([FromRoute(Name = "idProizvoda")] string idProizvoda,
+        public ActionResult AzurirajStatusRezervaciji([FromRoute(Name = "idProizvoda")] ObjectId idProizvoda,
                                                     [FromRoute(Name = "newKolicina")] int newKolicina)
         {
             try
             {
-                DataProvider.AzurirajKolicinuProizvoda(new ObjectId(idProizvoda), newKolicina);
+                DataProvider.AzurirajKolicinuProizvoda(idProizvoda, newKolicina);
                 return Ok();
             }
             catch (Exception e)
@@ -86,11 +86,11 @@ namespace MongoDB_BE.Controllers
 
         [HttpDelete]
         [Route("ObrisiProizvod/{proizvodId}")]
-        public ActionResult ObrisiProizvod([FromRoute(Name = "proizvodId")] string proizvodId)
+        public ActionResult ObrisiProizvod([FromRoute(Name = "proizvodId")] ObjectId proizvodId)
         {
             try
             {
-                DataProvider.ObrisiProizvod(new ObjectId(proizvodId));
+                DataProvider.ObrisiProizvod(proizvodId);
                 return Ok();
             }
             catch (Exception e)
