@@ -389,6 +389,7 @@ namespace DataLayer
                 avioKompanijaCollection.DeleteOne(a => a.Id == new ObjectId(id));
             }
         }
+        #endregion
 
         #region Putnik
         public static void KreirajKolekcijuPutnika()
