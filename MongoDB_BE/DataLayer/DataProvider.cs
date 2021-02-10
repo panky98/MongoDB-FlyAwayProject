@@ -5,6 +5,7 @@ using System.Text;
 using MongoDB.Driver.Core.Servers;
 using DataLayer.Models;
 using MongoDB.Bson;
+using System.Linq;
 
 namespace DataLayer
 {
@@ -51,6 +52,341 @@ namespace DataLayer
 
 
             db.GetCollection<Rezervacija>("rezervacije").UpdateOne(filter, update);
+        }
+
+        #endregion
+
+        #region Let
+        public static void KreirajLet(Let let)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var letovi = db.GetCollection<Let>("let");
+            letovi.InsertOne(let);
+        }
+
+        public static IList<LetDTO> VratiSveLetove()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Let> letovi= db.GetCollection<Let>("let").Find(x => true).ToList<Let>();
+            IList<LetDTO> letoviDTO = new List<LetDTO>();
+
+            foreach(var l in letovi)
+            {
+                LetDTO pom = new LetDTO();
+                pom.Id = l.Id.ToString();
+                pom.PolazniAerodrom = l.PolazniAerodrom;
+                pom.DolazniAerodrom = l.DolazniAerodrom;
+                pom.DatumLeta = l.DatumLeta;
+                pom.BrojSedista = l.BrojSedista;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach(var rez in l.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                if(l.AvioKompanija.CompareTo(ObjectId.Empty)==0)
+                {
+                    pom.AvioKompanija = "";
+                }
+                else
+                {
+                    AvioKompanija mojaAvioKompanija = db.GetCollection<AvioKompanija>("avioKompanija").Find(x => x.Id == l.AvioKompanija).FirstOrDefault();
+                    if(mojaAvioKompanija!=null)
+                    {
+                        pom.AvioKompanija = mojaAvioKompanija.Id.ToString();
+                    }
+                }
+
+                letoviDTO.Add(pom);
+            }
+
+            return letoviDTO;
+        }
+
+        public static IList<LetDTO> VratiGotoveLetove()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Let> letovi= db.GetCollection<Let>("let").Find(x => !(x.DatumLeta > DateTime.Now)).ToList<Let>();
+
+            IList<LetDTO> letoviDTO = new List<LetDTO>();
+
+            foreach (var l in letovi)
+            {
+                LetDTO pom = new LetDTO();
+                pom.Id = l.Id.ToString();
+                pom.PolazniAerodrom = l.PolazniAerodrom;
+                pom.DolazniAerodrom = l.DolazniAerodrom;
+                pom.DatumLeta = l.DatumLeta;
+                pom.BrojSedista = l.BrojSedista;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in l.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                if (l.AvioKompanija.CompareTo(ObjectId.Empty) == 0)
+                {
+                    pom.AvioKompanija = "";
+                }
+                else
+                {
+                    AvioKompanija mojaAvioKompanija = db.GetCollection<AvioKompanija>("avioKompanija").Find(x => x.Id == l.AvioKompanija).FirstOrDefault();
+                    if (mojaAvioKompanija != null)
+                    {
+                        pom.AvioKompanija = mojaAvioKompanija.Id.ToString();
+                    }
+                }
+                letoviDTO.Add(pom);
+            }
+
+            return letoviDTO;
+        }
+
+        public static IList<LetDTO> VratiTrenutneLetove()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Let> letovi=db.GetCollection<Let>("let").Find(x => x.DatumLeta > DateTime.Now).ToList<Let>();
+
+
+            IList<LetDTO> letoviDTO = new List<LetDTO>();
+
+            foreach (var l in letovi)
+            {
+                LetDTO pom = new LetDTO();
+                pom.Id = l.Id.ToString();
+                pom.PolazniAerodrom = l.PolazniAerodrom;
+                pom.DolazniAerodrom = l.DolazniAerodrom;
+                pom.DatumLeta = l.DatumLeta;
+                pom.BrojSedista = l.BrojSedista;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in l.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                if (l.AvioKompanija.CompareTo(ObjectId.Empty) == 0)
+                {
+                    pom.AvioKompanija = "";
+                }
+                else
+                {
+                    AvioKompanija mojaAvioKompanija = db.GetCollection<AvioKompanija>("avioKompanija").Find(x => x.Id == l.AvioKompanija).FirstOrDefault();
+                    if (mojaAvioKompanija != null)
+                    {
+                        pom.AvioKompanija = mojaAvioKompanija.Id.ToString();
+                    }
+                }
+                letoviDTO.Add(pom);
+            }
+
+            return letoviDTO;
+        }
+
+        public static LetDTO VratiLet(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Let l= db.GetCollection<Let>("let").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            LetDTO pom = new LetDTO();
+
+            if(l!=null)
+            {
+
+                pom.Id = l.Id.ToString();
+                pom.PolazniAerodrom = l.PolazniAerodrom;
+                pom.DolazniAerodrom = l.DolazniAerodrom;
+                pom.DatumLeta = l.DatumLeta;
+                pom.BrojSedista = l.BrojSedista;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in l.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                if (l.AvioKompanija.CompareTo(ObjectId.Empty) == 0)
+                {
+                    pom.AvioKompanija = "";
+                }
+                else
+                {
+                    AvioKompanija mojaAvioKompanija = db.GetCollection<AvioKompanija>("avioKompanija").Find(x => x.Id == l.AvioKompanija).FirstOrDefault();
+                    if (mojaAvioKompanija != null)
+                    {
+                        pom.AvioKompanija = mojaAvioKompanija.Id.ToString();
+                    }
+                }
+
+            }
+            return pom;
+        }
+
+        public static void AzurirajLet(String id,LetDTO letDTO)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            Let pom = new Let();
+            pom.Id = new ObjectId(id);
+            pom.PolazniAerodrom = letDTO.PolazniAerodrom;
+            pom.DolazniAerodrom = letDTO.DolazniAerodrom;
+            pom.DolazniAerodrom = letDTO.DolazniAerodrom;
+            pom.DatumLeta = letDTO.DatumLeta;
+            pom.BrojSedista = letDTO.BrojSedista;
+
+            pom.ListaRezervacija = new List<ObjectId>();
+            foreach(var rez in letDTO.ListaRezervacija)
+            {
+                pom.ListaRezervacija.Add(new ObjectId(rez));
+            }
+            if (letDTO.AvioKompanija.Equals(""))
+                pom.AvioKompanija = ObjectId.Empty;
+            else
+            {
+                IMongoCollection<AvioKompanija> collectionAvioKompanija = db.GetCollection<AvioKompanija>("avioKompanija");
+
+                AvioKompanija a = collectionAvioKompanija.Find(kompanija => kompanija.Id == new ObjectId(letDTO.AvioKompanija)).FirstOrDefault();
+
+                if (a != null)
+                {
+
+                    if (!a.Letovi.Contains(pom.Id))
+                    {
+                        a.Letovi.Add(pom.Id);
+                        collectionAvioKompanija.ReplaceOne(x => x.Id == a.Id, a);
+
+                    }
+                    pom.AvioKompanija = new ObjectId(letDTO.AvioKompanija);
+                }
+
+
+            }
+
+
+            db.GetCollection<Let>("let").ReplaceOne(x => x.Id == new ObjectId(id), pom);
+        }
+
+        public static void ObrisiLet(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            /* Let let = db.GetCollection<Let>("let").Find(x => x.Id.ToString() == id).FirstOrDefault();
+             db.GetCollection<Let>("let").DeleteOne(let => let.Id == id);
+             var avioKompanije = db.GetCollection<AvioKompanija>("avioKompanija");
+
+             AvioKompanija a = avioKompanije.Find(x => x.Id == let.Id).FirstOrDefault();
+             if(a!=null)
+             {
+                 a.Letovi.Remove(a.Letovi.Where(x => x ==new ObjectId(id)).FirstOrDefault());
+                 avioKompanije.ReplaceOne(x => x.Id == a.Id, a);
+             }*/
+
+           
+
+            db.GetCollection<Let>("let").DeleteOne(x => x.Id == new ObjectId(id));
+        }
+
+        #endregion
+
+        #region AvioKompanija
+
+        public static void KreirajAvioKompaniju(AvioKompanija avioKompanija)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<AvioKompanija>("avioKompanija");
+            collection.InsertOne(avioKompanija);
+        }
+
+        public static IList<AvioKompanijaDTO> VratiAvioKompanije()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<AvioKompanija> AvioKompanije = db.GetCollection<AvioKompanija>("avioKompanija").Find(x => true).ToList<AvioKompanija>();
+
+            IList<AvioKompanijaDTO> AvioKompanijeDTO = new List<AvioKompanijaDTO>();
+            foreach(var a in AvioKompanije)
+            {
+                AvioKompanijaDTO pom = new AvioKompanijaDTO();
+                pom.Id = a.Id.ToString();
+                pom.Naziv = a.Naziv;
+                pom.GodinaOsnivanja = a.GodinaOsnivanja;
+                pom.GradPredstavnistva = a.GradPredstavnistva;
+
+                foreach(var let in a.Letovi)
+                {
+                    pom.Letovi.Add(let.ToString());
+                }
+
+                foreach(var k in a.Komentari)
+                {
+                    pom.Komentari.Add(k.ToString());
+                }
+
+                AvioKompanijeDTO.Add(pom);
+            }
+
+            return AvioKompanijeDTO;
+        }
+
+        public static AvioKompanijaDTO VratiAvioKompaniju(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            AvioKompanija a= db.GetCollection<AvioKompanija>("avioKompanija").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+
+            AvioKompanijaDTO pom = new AvioKompanijaDTO();
+
+            if (a != null)
+            {
+
+                pom.Id = a.Id.ToString();
+                pom.GodinaOsnivanja = a.GodinaOsnivanja;
+                pom.GradPredstavnistva = a.GradPredstavnistva;
+                pom.Naziv = a.Naziv;
+                foreach (var let in a.Letovi)
+                {
+                    pom.Letovi.Add(let.ToString());
+                }
+
+                foreach (var k in a.Komentari)
+                {
+                    pom.Komentari.Add(k.ToString());
+                }
+            }
+            return pom;
+
+        }
+
+        public static void AzurirajAvioKompaniju(string id, AvioKompanijaDTOUpdate avioKompanijaDTOUpdate)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            IMongoCollection<AvioKompanija> avioKompanijaCollection = db.GetCollection<AvioKompanija>("avioKompanija");
+
+            AvioKompanija avioKompanija = avioKompanijaCollection.Find(a => a.Id == new ObjectId(id)).FirstOrDefault();
+
+            if(avioKompanija!=null)
+            {
+                avioKompanija.Naziv = avioKompanijaDTOUpdate.Naziv;
+                avioKompanija.GodinaOsnivanja = avioKompanijaDTOUpdate.GodinaOsnivanja;
+                avioKompanija.GradPredstavnistva = avioKompanijaDTOUpdate.GradPredstavnistva;
+
+                avioKompanijaCollection.ReplaceOne(x => x.Id == new ObjectId(id), avioKompanija);
+            }
+        }
+        public static void ObrisiAvioKompanijuId(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            IMongoCollection<AvioKompanija> avioKompanijaCollection = db.GetCollection<AvioKompanija>("avioKompanija");
+
+            AvioKompanija avioKompanijaZaBrisanje = avioKompanijaCollection.Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            if(avioKompanijaZaBrisanje!=null)
+            {
+                foreach(var let in avioKompanijaZaBrisanje.Letovi)
+                {
+                    DataProvider.ObrisiLet(let.ToString());
+                }
+
+                avioKompanijaCollection.DeleteOne(a => a.Id == new ObjectId(id));
+            }
         }
 
         #endregion
