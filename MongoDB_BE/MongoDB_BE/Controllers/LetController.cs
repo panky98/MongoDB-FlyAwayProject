@@ -45,6 +45,20 @@ namespace MongoDB_BE.Controllers
         }
 
         [HttpGet]
+        [Route("VratiSveLetoveSaObjectId")]
+        public ActionResult VratiSveLetoveSaObjectId()
+        {
+            try
+            {
+                return new JsonResult(DataProvider.VratiSveLetoveSaObjectId());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
+            }
+        }
+
+        [HttpGet]
         [Route("VratiGotoveLetove")]
         public ActionResult VratiGotoveLetove()
         {

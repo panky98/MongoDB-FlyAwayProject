@@ -14,6 +14,11 @@ function NavBar() {
             </Link>
           </li>  
           <li class="navbar-brand">
+            <Link to="/letovi">
+                Letovi
+            </Link>
+          </li> 
+          <li class="navbar-brand">
             <Link to="/kreiraj-putnika">
                 DodajPutnika
             </Link>

@@ -183,6 +183,12 @@ namespace DataLayer
             return letoviDTO;
         }
 
+        public static IList<Let> VratiSveLetoveSaObjectId()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Let> letovi=db.GetCollection<Let>("let").Find(x =>true).ToList<Let>();
+            return letovi;
+        }
         public static LetDTO VratiLet(string id)
         {
             IMongoDatabase db = Session.MongoDatabase;
@@ -351,6 +357,7 @@ namespace DataLayer
                 }
             }
             return pom;
+            
 
         }
 
@@ -371,6 +378,9 @@ namespace DataLayer
                 avioKompanijaCollection.ReplaceOne(x => x.Id == new ObjectId(id), avioKompanija);
             }
         }
+
+       
+
         public static void ObrisiAvioKompanijuId(string id)
         {
             IMongoDatabase db = Session.MongoDatabase;

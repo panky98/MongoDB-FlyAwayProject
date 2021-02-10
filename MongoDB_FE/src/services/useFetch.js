@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const baseUrl = "https://localhost:44392/";
+const baseUrl = "https://localhost:44399/";
 
 export default function useFetch(url) {
   const [data, setData] = useState(null);
@@ -23,7 +23,7 @@ export default function useFetch(url) {
         setLoading(false);
       }
     }
-    init();
+    init(); 
   }, [url]);
 
   return { data, error, loading };
