@@ -303,8 +303,6 @@ namespace DataLayer
 
             db.GetCollection<Proizvod>("proizvodi").UpdateOne(filter, update);
         }
-        #endregion
-
         #region Let
         public static void KreirajLet(Let let)
         {
