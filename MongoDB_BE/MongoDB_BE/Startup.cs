@@ -26,6 +26,13 @@ namespace MongoDB_BE
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(options => {
+                options.AddPolicy("Corse", builder => {
+                    builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +46,8 @@ namespace MongoDB_BE
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("Corse");
 
             app.UseAuthorization();
 
