@@ -543,27 +543,51 @@ namespace DataLayer
             return komentari;
         }
 
-        public static void KreirajKomentar(Komentar komentar)
+        public static Komentar VratiKomentar(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Komentar komentar = db.GetCollection<Komentar>("komentari").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            return komentar;
+        }
+
+        public static List<Komentar> VratiKomentareZaAvioKompaniju(string id)
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Komentar>("komentari");
+
+            List<Komentar> komentari = new List<Komentar>();
+
+            foreach (Komentar komentar in collection.Find(x => x.avioKompanija == new ObjectId(id)).ToList())
+            {
+                komentari.Add(komentar);
+            }
+
+            return komentari;
+        }
+
+        public static void KreirajKomentar(string id, Komentar komentar)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Komentar>("komentari");
+            komentar.avioKompanija = new ObjectId(id);
             collection.InsertOne(komentar);
         }
 
-        public static void AzurirajKomentar(ObjectId komentarId, String text)
+        public static void AzurirajKomentar(string komentarId, String text)
         {
             IMongoDatabase db = Session.MongoDatabase;
-            var filter = Builders<Komentar>.Filter.Eq(x => x.Id, komentarId);
+            var filter = Builders<Komentar>.Filter.Eq(x => x.Id, new ObjectId(komentarId));
             var update = Builders<Komentar>.Update.Set(x => x.tekstKomentara, text);
 
 
             db.GetCollection<Komentar>("komentari").UpdateOne(filter, update);
         }
 
-        public static void ObrisiKomentar(ObjectId komentarId)
+        public static void ObrisiKomentar(String komentarId)
         {
             IMongoDatabase db = Session.MongoDatabase;
-            db.GetCollection<Komentar>("komentari").DeleteOne(x => x.Id == komentarId);
+            db.GetCollection<Komentar>("komentari").DeleteOne(x => x.Id == new ObjectId(komentarId));
         }
         #endregion
 
