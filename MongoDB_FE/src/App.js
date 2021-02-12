@@ -11,7 +11,6 @@ import CreatePutnikForm from './components/CreatePutnikForm';
 import Letovi from './components/Letovi.js';
 import Let from './components/Let.js';
 import AvioKompanija from './components/AvioKompanija';
-import AvioKompanije from './components/AvioKompanije.js';
 
 function App() {
   return (
@@ -29,9 +28,6 @@ function App() {
       </Route>
       <Route exact path="/letovi/:id">
         <Let/>
-      </Route>
-      <Route exact path="/avioKompanije">
-        <AvioKompanije/>
       </Route>
       <Route exact path="/avioKompanije/:id">
         <AvioKompanija/>

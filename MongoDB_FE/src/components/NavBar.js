@@ -19,11 +19,6 @@ function NavBar() {
             </Link>
           </li> 
           <li class="navbar-brand">
-            <Link to="/avioKompanije">
-                Avio kompanije
-            </Link>
-          </li> 
-          <li class="navbar-brand">
             <Link to="/kreiraj-putnika">
                 DodajPutnika
             </Link>

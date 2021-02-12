@@ -15,7 +15,7 @@ function DodajKomentar({ime, prezime, tekstKomentara, brZvezdica, handleStateCha
                 <input placeholder="Ime" name="ime" value={ime} onChange={(ev)=>handleStateChange(ev)}/>
                 <input placeholder="Prezime" name="prezime" value={prezime} onChange={(ev)=>handleStateChange(ev)}/>
             </div>
-            <textarea placeholder="Unesite Vas komentar" name="tekstKomentara" cols="40" rows="5" value={tekstKomentara}  onChange={(ev)=>handleStateChange(ev)}></textarea>
+            <textarea name="tekstKomentara" cols="40" rows="5" value={tekstKomentara}  onChange={(ev)=>handleStateChange(ev)}></textarea>
             <ReactStars
             count={5}
             onChange={(broj)=>promeniZvezdice(broj)}

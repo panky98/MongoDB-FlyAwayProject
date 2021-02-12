@@ -28,41 +28,13 @@ namespace MongoDB_BE.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("VratiKomentar/{id}")]
-        public ActionResult VratiKomentar([FromRoute(Name = "id")] string id)
-        {
-            try
-            {
-                return new JsonResult(DataProvider.VratiKomentar(id));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
-            }
-        }
-
-        [HttpGet]
-        [Route("VratiKomentareZaAvioKompaniju/{id}")]
-        public ActionResult VratiKomentareZaAvioKompaniju([FromRoute(Name = "id")] string id)
-        {
-            try
-            {
-                return new JsonResult(DataProvider.VratiKomentareZaAvioKompaniju(id));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
-            }
-        }
-
         [HttpPost]
-        [Route("KreirajKomentar/{avioId}")]
-        public ActionResult KreirajKomentar([FromRoute(Name = "avioId")] string id, [FromBody] Komentar komentar)
+        [Route("KreirajKomentar")]
+        public ActionResult KreirajKomentar([FromBody] Komentar komentar)
         {
             try
             {
-                DataProvider.KreirajKomentar(id, komentar);
+                DataProvider.KreirajKomentar(komentar);
                 return Ok();
             }
             catch (Exception e)
@@ -73,7 +45,7 @@ namespace MongoDB_BE.Controllers
 
         [HttpDelete]
         [Route("ObrisiKomentar/{komentarId}")]
-        public ActionResult ObrisiKomentar([FromRoute(Name = "komentarId")] string komentarId)
+        public ActionResult ObrisiKomentar([FromRoute(Name = "komentarId")] ObjectId komentarId)
         {
             try
             {
@@ -88,7 +60,7 @@ namespace MongoDB_BE.Controllers
 
         [HttpPut]
         [Route("AzurirajKomentar/{komentarId}/{text}")]
-        public ActionResult AzurirajKomentar([FromRoute(Name = "komentarId")] string komentarId,
+        public ActionResult AzurirajKomentar([FromRoute(Name = "komentarId")] ObjectId komentarId,
                                                     [FromRoute(Name = "text")] string text)
         {
             try
