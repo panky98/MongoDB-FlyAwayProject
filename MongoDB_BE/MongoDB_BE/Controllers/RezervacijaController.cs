@@ -36,6 +36,25 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
+                IList<Kofer> koferi = DataProvider.VratiSveKofere();
+                Kofer kofer = null;
+                foreach(Kofer k in koferi)
+                {
+                    if (k.tip.Equals(rezervacija.Prtljag))
+                    {
+                        kofer = k;
+                        break;
+                    }
+                }
+                if(kofer==null)
+                {
+                    kofer = new Kofer();
+                    kofer.tezina = 100;
+                    kofer.tip = rezervacija.Prtljag;
+                    DataProvider.KreirajKofer(kofer);
+                }
+
+
                 String[] timeNow = DateTime.Now.ToLongTimeString().Split(":");
                 String[] dateNow = DateTime.Now.ToShortDateString().Split("/");
                 Rezervacija r = new Rezervacija
@@ -45,15 +64,14 @@ namespace MongoDB_BE.Controllers
                     PasosBytes = Convert.FromBase64String(rezervacija.PasosBytesBase64),
                     CovidTestBytes = Convert.FromBase64String(rezervacija.CovidTestBytesBase64),
                     Status = rezervacija.Status,
-                    KodRezervacije = "RE"+dateNow[0]+dateNow[1]+dateNow[2]+timeNow[0]+timeNow[1]+timeNow[2].ElementAt(0)+timeNow[2].ElementAt(1),
+                    KodRezervacije = "RE" + dateNow[0] + dateNow[1] + dateNow[2] + timeNow[0] + timeNow[1] + timeNow[2].ElementAt(0) + timeNow[2].ElementAt(1),
                     ListaProizvoda = rezervacija.ListaProizvoda,
-                    ListaKofera = rezervacija.ListaKofera,
-                    Putnik = rezervacija.Putnik,
-                    Let = rezervacija.Let
+                    Putnik = new ObjectId(rezervacija.Putnik),
+                    Let = new ObjectId(rezervacija.Let),
+                    Kofer = kofer.Id
                 };
 
-                DataProvider.KreirajRezervaciju(r);
-                return Ok();
+                return new JsonResult(DataProvider.KreirajRezervaciju(r).ToString());
             }
             catch(Exception e)
             {
@@ -66,7 +84,25 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
-                 return Ok(DataProvider.VratiRezervacijuPrekoKoda(kodRezervacije));
+                Rezervacija rez = DataProvider.VratiRezervacijuPrekoKoda(kodRezervacije);
+                if (rez != null)
+                    return Ok(rez);
+                else
+                    return NotFound();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("VratiRezervacijuPrekoIda/{idRez}")]
+        public ActionResult VratiRezervacijuPrekoIda([FromRoute(Name = "idRez")] string idRez)
+        {
+            try
+            {
+                return Ok(DataProvider.VratiRezervacijuPrekoId(idRez));
             }
             catch (Exception e)
             {
@@ -111,6 +147,20 @@ namespace MongoDB_BE.Controllers
             try
             {
                 DataProvider.AzurirajRezervaciju(kodRezervacije,newStatus);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
+        [HttpPut]
+        [Route("DodajProizvodeRezervaciji/{idRezervacije}")]
+        public ActionResult DodajProizvodeRezervaciji([FromRoute(Name ="idRezervacije")]string idRez,[FromBody] String[] rezervacije)
+        {
+            try
+            {
+                DataProvider.DodajProizvodeRezervaciji(idRez, rezervacije);
                 return Ok();
             }
             catch (Exception e)

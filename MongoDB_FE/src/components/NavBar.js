@@ -22,12 +22,12 @@ function NavBar() {
             <Link to="/avioKompanije">
                 Avio kompanije
             </Link>
-          </li> 
+          </li>
           <li class="navbar-brand">
-            <Link to="/kreiraj-putnika">
-                DodajPutnika
+            <Link to="/status-rezervacije">
+                Proveri rezervaciju
             </Link>
-          </li>       
+          </li>        
         </ul>
       </nav>
       </div>

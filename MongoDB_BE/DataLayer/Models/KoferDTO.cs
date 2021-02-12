@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DataLayer.Models
 {
-    public class Kofer
+    public class KoferDTO
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public String tip { get; set; }
         public int tezina { get; set; }
     }

@@ -38,11 +38,12 @@ namespace MongoDB_BE.Controllers
             {
                 Proizvod p = new Proizvod
                 {
-                    Id = proizvod.Id,
+                    Id = new ObjectId(proizvod.Id),
                     cena = proizvod.cena,
                     SlikaBytes = Convert.FromBase64String(proizvod.SlikaBytesBase64),
                     tip = proizvod.tip,
-                    kolicina = proizvod.kolicina
+                    kolicina = proizvod.kolicina,
+                    naziv=proizvod.naziv
                 };
 
                 DataProvider.KreirajProizvod(p);
@@ -60,7 +61,23 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
-                return Ok(DataProvider.VratiProizvode());
+                IList<Proizvod> proizvodi = DataProvider.VratiProizvode();
+                IList<ProizvodDTO> returnList = new List<ProizvodDTO>();
+                foreach(Proizvod p in proizvodi)
+                {
+                    if (p.naziv != null)
+                    {
+                        returnList.Add(new ProizvodDTO()
+                        {
+                            Id = p.Id.ToString(),
+                            cena = p.cena,
+                            SlikaBytesBase64 = Convert.ToBase64String(p.SlikaBytes),
+                            tip = p.tip,
+                            naziv = p.naziv
+                        });
+                    }
+                }
+                return Ok(returnList);
             }
             catch (Exception e)
             {

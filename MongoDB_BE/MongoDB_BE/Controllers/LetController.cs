@@ -6,6 +6,7 @@ using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace MongoDB_BE.Controllers
 {
@@ -16,11 +17,19 @@ namespace MongoDB_BE.Controllers
 
         [HttpPost]
         [Route("KreirajLet")]
-        public ActionResult KreirajLet([FromBody]Let let)
+        public ActionResult KreirajLet([FromBody]LetDTO let)
         {
             try
             {
-                DataProvider.KreirajLet(let);
+                Let newLet = new Let()
+                {
+                    PolazniAerodrom = let.PolazniAerodrom,
+                    DolazniAerodrom = let.DolazniAerodrom,
+                    DatumLeta = let.DatumLeta,
+                    BrojSedista = let.BrojSedista,
+                    AvioKompanija = new ObjectId(let.AvioKompanija)
+                };
+                DataProvider.KreirajLet(newLet);
                 return Ok();
             }
             catch(Exception ex)

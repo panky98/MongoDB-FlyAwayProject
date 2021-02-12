@@ -20,17 +20,55 @@ namespace DataLayer
             var collection = db.GetCollection<Rezervacija>("rezervacije");
         }
 
-        public static void KreirajRezervaciju(Rezervacija r)
+        public static void DodajProizvodeRezervaciji(string idRez, string[] rezervacije)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Rezervacija>("rezervacije");
+
+            IList<ObjectId> retList = new List<ObjectId>();
+            foreach(String objId in rezervacije)
+            {
+                retList.Add(new ObjectId(objId));
+            }
+
+            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Id, new ObjectId(idRez));
+            var update = Builders<Rezervacija>.Update.Set(x => x.ListaProizvoda, retList);
+            collection.UpdateOne(filter, update);
+        }
+        public static ObjectId KreirajRezervaciju(Rezervacija r)
         {
                 IMongoDatabase db = Session.MongoDatabase;
                 var collection = db.GetCollection<Rezervacija>("rezervacije");
                 collection.InsertOne(r);
+
+            return r.Id;
         }
 
         public static Rezervacija VratiRezervacijuPrekoKoda(string kod)
         {
             IMongoDatabase db = Session.MongoDatabase;
             return db.GetCollection<Rezervacija>("rezervacije").Find(x => x.KodRezervacije==kod).FirstOrDefault();
+        }
+
+        public static RezervacijaDTO VratiRezervacijuPrekoId(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Rezervacija rez= db.GetCollection<Rezervacija>("rezervacije").Find(x => x.Id==new ObjectId(id)).FirstOrDefault();
+
+            IList<string> listProducts = new List<string>();
+            foreach(ObjectId idProz in rez.ListaProizvoda)
+            {
+                listProducts.Add(DataProvider.VratiProizvodPrekoIda(idProz.ToString()).naziv);
+            }
+
+            RezervacijaDTO rezDTO = new RezervacijaDTO()
+            {
+                Id = rez.Id,
+                KodRezervacije = rez.KodRezervacije,
+                Status = rez.Status,
+                Proizvodi = listProducts
+            };
+            return rezDTO;
         }
 
         public static IList<Rezervacija> VratiRezervacije()
@@ -472,11 +510,12 @@ namespace DataLayer
             return putnici;
         }
 
-        public static void KreirajPutnika(Putnik putnik)
+        public static ObjectId KreirajPutnika(Putnik putnik)
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Putnik>("putnici");
             collection.InsertOne(putnik);
+            return putnik.Id;
         }
 
         public static void DodajRezervacijuPutniku(String kodRezervacije, String jmbg)
@@ -644,6 +683,12 @@ namespace DataLayer
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Proizvod>("proizvodi");
+        }
+
+        public static Proizvod VratiProizvodPrekoIda(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Proizvod>("proizvodi").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
         }
 
         public static void KreirajProizvod(Proizvod p)

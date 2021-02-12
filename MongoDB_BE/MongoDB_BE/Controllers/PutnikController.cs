@@ -79,8 +79,8 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
-                DataProvider.KreirajPutnika(putnik);
-                return Ok();
+                ObjectId retVal=DataProvider.KreirajPutnika(putnik);
+                return new JsonResult(retVal.ToString());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ namespace DataLayer.Models
         public int cena { get; set; }
         public byte[] SlikaBytes { get; set; }
         public string tip { get; set; }
+        public string naziv { get; set; }
 
         public int kolicina { get; set; }
 

@@ -35,7 +35,17 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
-                return Ok(DataProvider.VratiSveKofere());
+                IList<KoferDTO> returnList = new List<KoferDTO>();
+                foreach(Kofer k in DataProvider.VratiSveKofere())
+                {
+                    returnList.Add(new KoferDTO()
+                    {
+                        Id=k.Id.ToString(),
+                        tezina=k.tezina,
+                        tip=k.tip
+                    });
+                }
+                return Ok(returnList);
             }
             catch (Exception e)
             {
@@ -45,11 +55,16 @@ namespace MongoDB_BE.Controllers
 
         [HttpPost]
         [Route("KreirajKofer")]
-        public ActionResult KreirajKofer([FromBody] Kofer kofer)
+        public ActionResult KreirajKofer([FromBody] KoferDTO kofer)
         {
             try
             {
-                DataProvider.KreirajKofer(kofer);
+                Kofer k = new Kofer()
+                {
+                    tip = kofer.tip,
+                    tezina = kofer.tezina,
+                };
+                DataProvider.KreirajKofer(k);
                 return Ok();
             }
             catch (Exception e)

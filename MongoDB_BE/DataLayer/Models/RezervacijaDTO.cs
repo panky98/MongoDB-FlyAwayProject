@@ -14,8 +14,10 @@ namespace DataLayer.Models
         public string Status { get; set; }
         public string KodRezervacije { get; set; }
         public IList<ObjectId> ListaProizvoda { get; set; }
-        public IList<ObjectId> ListaKofera { get; set; }
-        public ObjectId Putnik { get; set; }
-        public ObjectId Let { get; set; }
+        public IList<string> Proizvodi { get; set; }
+
+        public string Putnik { get; set; }
+        public string Let { get; set; }
+        public string Prtljag { get; set; }
     }
 }

@@ -12,6 +12,9 @@ import Letovi from './components/Letovi.js';
 import Let from './components/Let.js';
 import AvioKompanija from './components/AvioKompanija';
 import AvioKompanije from './components/AvioKompanije.js';
+import Proizvodi from './components/Proizvodi';
+import InfoRezervacija from './components/InfoRezervacija';
+import StatusRezervacija from './components/StatusRezervacija';
 
 function App() {
   return (
@@ -21,8 +24,17 @@ function App() {
       <Route exact path="/">
         <Home/>
       </Route>
-      <Route path="/kreiraj-putnika">
+      <Route path="/kreiraj-putnika/:idLeta">
         <CreatePutnikForm/>
+      </Route>
+      <Route path="/proizvodi/:idRez">
+        <Proizvodi/>
+      </Route>
+      <Route path="/rezervacija/:idRez">
+        <InfoRezervacija/>
+      </Route>
+      <Route path="/status-rezervacije">
+        <StatusRezervacija/>
       </Route>
       <Route exact path="/letovi">
         <Letovi/>

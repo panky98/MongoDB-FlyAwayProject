@@ -33,8 +33,7 @@ function Let() {
              
             {l.avioKompanija!=="" && <MalaAvioKompanija id={l.avioKompanija}/>}
             {l.avioKompanija!=="" && <Link to={`/avioKompanije/${l.avioKompanija}`} className="btn btn-primary">Saznaj o avio kompaniji</Link>}
-            
-
+            <Link to={`/kreiraj-putnika/${l.id}`} className="btn btn-primary">Rezerviši</Link>
         </div>
     )
 }
