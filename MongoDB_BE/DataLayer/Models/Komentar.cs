@@ -12,5 +12,7 @@ namespace DataLayer.Models
         public String prezime { get; set; }
         public String tekstKomentara { get; set; }
         public int brZvezdica { get; set; }
+        public ObjectId avioKompanija { get; set; }
+
     }
 }

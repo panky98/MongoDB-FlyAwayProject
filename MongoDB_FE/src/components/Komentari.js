@@ -17,6 +17,7 @@ function Komentari() {
     if(error) throw error;
     if(loading) return <Spinner/>;
 
+    //let komentari=kom.filter(k=>k.)
     console.log(komentari);
 
     const tekstDugme=prikaziDodajKomentar===true ? "Dodaj komentar" : "Zatvori";
@@ -56,7 +57,7 @@ function Komentari() {
                 {komentari.map(k=>
                 {   
                     return(
-                    <div class="comments-list">
+                    <div class="comments-list" className={k.id}>
                         <div class="media">
                             <div class="media-body">
                                  <h4 class="media-heading user_name">{k.ime} {k.prezime}</h4>
