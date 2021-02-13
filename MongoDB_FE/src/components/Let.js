@@ -4,7 +4,7 @@ import Spinner from '../components/Spinner.js';
 import useFetch from '../services/useFetch.js';
 import MalaAvioKompanija from './MalaAvioKompanija.js';
 import { Link, NavLink } from "react-router-dom";
-
+import moment from 'moment';
 
 function Let() {
 
@@ -25,6 +25,7 @@ function Let() {
     console.log(l);
     //console.log(avioKompanija);
 
+    console.log(moment().isBefore(l.datumLeta));
     return (
         <div>
             <h3>Polazni aerodrom: {l.polazniAerodrom}</h3>
@@ -33,7 +34,7 @@ function Let() {
              
             {l.avioKompanija!=="" && <MalaAvioKompanija id={l.avioKompanija}/>}
             {l.avioKompanija!=="" && <Link to={`/avioKompanije/${l.avioKompanija}`} className="btn btn-primary">Saznaj o avio kompaniji</Link>}
-            <Link to={`/kreiraj-putnika/${l.id}`} className="btn btn-primary">Rezerviši</Link>
+            {moment().isBefore(l.datumLeta) && <Link to={`/kreiraj-putnika/${l.id}`} className="btn btn-primary">Rezerviši</Link>}
         </div>
     )
 }

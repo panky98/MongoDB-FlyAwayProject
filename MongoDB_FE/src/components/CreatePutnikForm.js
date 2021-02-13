@@ -7,7 +7,6 @@ import ReactFileReader from 'react-file-reader';
 
 
 
-
 function CreatePutnikForm(){
     const {idLeta}=useParams();
     const [passportBase64,setPassportBase64]=useState("");
@@ -76,17 +75,17 @@ function CreatePutnikForm(){
         <div style={{"display":"flex"}}>
         <input name="prtljagRB" type="radio" value="mali" onChange={(event)=>setPrtljag(event.target.value)} />
         <img src="../mali.jpg" style={{"width":"100px","height":"100px"}}/>
-          <p>Mali (0-100kg)</p>
+          <p>Mali (0-21kg)</p>
         </div>
         <div style={{"display":"flex"}}>
           <input name="prtljagRB" type="radio" value="srednji" onChange={(event)=>setPrtljag(event.target.value)} />
           <img src="../srednji.jpg" style={{"width":"100px","height":"100px"}}/>
-          <p>Srednji (100-500kg)</p>
+          <p>Srednji (21-50kg)</p>
         </div>
         <div style={{"display":"flex"}}>
           <input name="prtljagRB" type="radio" value="veliki" onChange={(event)=>setPrtljag(event.target.value)} />
           <img src="../veliki.jpg" style={{"width":"100px","height":"100px"}}/>
-          <p>Veliki (500-1000kg)</p>
+          <p>Veliki (50-100kg)</p>
         </div>
       </div>
       <br/><br/>

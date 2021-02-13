@@ -5,9 +5,9 @@ import useFetch from '../services/useFetch.js';
 import DodajKomentar from '../components/DodajKomentar.js';
 import ReactStars from "react-rating-stars-component";
 
-function Komentari() {
+function Komentari({avioKompanija}) {
 
-    const {data:komentari, loading:loading, error:error}=useFetch("Komentar/VratiSveKomentare");
+    const {data:komentari, loading:loading, error:error}=useFetch("Komentar/VratiKomentareZaAvioKompaniju/" + avioKompanija);
     const [prikaziDodajKomentar, setPrikaziDodajKomentar]=useState(true);
     const [ime, setIme]=useState("");
     const [prezime, setPrezime]=useState("");
@@ -52,6 +52,7 @@ function Komentari() {
                                                 brZvezdica={brZvezdica}
                                                 handleStateChange={handleStateChange}
                                                 promeniZvezdice={promeniZvezdice}
+                                                avioKompanija={avioKompanija}
                                                 />}
                 </div>
                 {komentari.map(k=>

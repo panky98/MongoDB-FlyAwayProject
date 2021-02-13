@@ -101,6 +101,11 @@ namespace DataLayer
             IMongoDatabase db = Session.MongoDatabase;
             var letovi = db.GetCollection<Let>("let");
             letovi.InsertOne(let);
+
+            if(let.AvioKompanija!=ObjectId.Empty)
+            {
+                DodajAvioKompanijiLet(let.Id, let.AvioKompanija);
+            }
         }
 
         public static IList<LetDTO> VratiSveLetove()
@@ -415,6 +420,15 @@ namespace DataLayer
 
                 avioKompanijaCollection.ReplaceOne(x => x.Id == new ObjectId(id), avioKompanija);
             }
+        }
+
+        public static void DodajAvioKompanijiLet(ObjectId letId, ObjectId avioKompanijaId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IMongoCollection<AvioKompanija> avioKompanijaCollection = db.GetCollection<AvioKompanija>("avioKompanija");
+            AvioKompanija avioKompanija= avioKompanijaCollection.Find(x => x.Id == avioKompanijaId).FirstOrDefault();
+            avioKompanija.Letovi.Add(letId);
+            avioKompanijaCollection.ReplaceOne(x => x.Id == avioKompanijaId, avioKompanija);
         }
 
        

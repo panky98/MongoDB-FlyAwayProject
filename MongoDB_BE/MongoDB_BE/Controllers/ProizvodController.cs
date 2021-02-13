@@ -38,7 +38,6 @@ namespace MongoDB_BE.Controllers
             {
                 Proizvod p = new Proizvod
                 {
-                    Id = new ObjectId(proizvod.Id),
                     cena = proizvod.cena,
                     SlikaBytes = Convert.FromBase64String(proizvod.SlikaBytesBase64),
                     tip = proizvod.tip,
