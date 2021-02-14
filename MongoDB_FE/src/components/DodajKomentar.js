@@ -10,7 +10,7 @@ function DodajKomentar({avioKompanija,ime, prezime, tekstKomentara, brZvezdica, 
     {
        
         setShowSpinner(true);
-        //alert(ime + " " + prezime + " " + tekstKomentara + " " + brZvezdica);
+        alert(ime + " " + prezime + " " + tekstKomentara + " " + brZvezdica);
 
         const obj={
             ime:ime,
@@ -54,7 +54,7 @@ function DodajKomentar({avioKompanija,ime, prezime, tekstKomentara, brZvezdica, 
             activeColor="#ffd700"
             />
 
-            <button type="button" className="btn btn-primary">Dodaj komentar</button>
+            <button className="btn btn-primary">Dodaj komentar</button>
         </form>
         </div>
     )
