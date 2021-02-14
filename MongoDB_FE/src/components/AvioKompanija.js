@@ -19,17 +19,25 @@ function AvioKompanija() {
 
 
     return (
-        <div>
-            <h3>Naziv: {avioKompanija.naziv}</h3>
-            <h3>Godina osnivanja: {avioKompanija.godinaOsnivanja}</h3>
-            <h3>Sediste kompanije: {avioKompanija.gradPredstavnistva}</h3>
-            <h3>Istorija letova:</h3>
+        <div class="card float-container" style={{textAlign:"left"}}>
+            <div className={"formCreate"} class="card-body float-container" style={{textAlign:"left"}}>
+            <div class="float-child" style={{width:"100%", marginLeft:"20px", marginTop:"5px"}}>
+            <h3 style={{color:"#3399FF"}}>Naziv: {avioKompanija.naziv}</h3> </div>
+            <div class="float-child" style={{width:"100%", marginLeft:"20px", marginTop:"5px"}}>
+            <h5>Godina osnivanja: {avioKompanija.godinaOsnivanja}</h5> </div>
+            <div class="float-child" style={{width:"100%", marginLeft:"20px", marginTop:"5px"}}>
+            <h5>Sediste kompanije: {avioKompanija.gradPredstavnistva}</h5> </div>
+            <div class="float-child" style={{width:"100%", marginLeft:"20px", marginTop:"5px"}}>
+            <h3 style={{color:"#3399FF"}}>Istorija letova:</h3>
             {avioKompanija.letovi.length===0 && <p>Trenutno nema letova </p>}
             {avioKompanija.letovi.map(l=>{
                 return <LetZaAvioKompaniju id={l} className={id}/>
+                
             })}
-        
-            <Komentari avioKompanija={avioKompanija.id}/>
+         </div>
+         <div class="float-child" style={{width:"80%", marginLeft:"20px", marginTop:"20px"}}>
+            <Komentari avioKompanija={avioKompanija.id}/> </div>
+            </div>
         </div>
     )
 }

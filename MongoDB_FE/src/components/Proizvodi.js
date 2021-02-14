@@ -17,10 +17,11 @@ function Proizvodi()
 
     console.log(proizvodi);
     return(
-        <div>
+        <div className={"formCreate"} class="float-container" style={{textAlign:"center"}}>
             {showSpinner && <Spinner />}
             {proizvodi.map(el=>{
-                return (<div>
+                return (<div className={"formCreate"} class="float-container" style={{textAlign:"center"}}>
+                    <div class="float-child" style={{width:"10%"}}>
                     <input type="checkbox" onChange={(event)=>{
                             if(event.currentTarget.checked){
                                 addedProducts.push(el.id);
@@ -33,13 +34,20 @@ function Proizvodi()
                             }
                             console.log(addedProducts);
                     }}/>
-                    <p>Naziv: {el.naziv}</p><br/>
-                    <p>Cena: {el.cena}</p><br/>
+                    </div>
+                    <div class="float-child" style={{width:"30%"}}>
+                    <p style={{color:"#3399FF"}}>Naziv: {el.naziv}</p><br/>
+                    </div>
+                    <div class="float-child" style={{width:"30%"}}>
+                    <p style={{color:"#3399FF"}}>Cena: {el.cena}</p><br/>
+                    </div>
+                    <div class="float-child" style={{width:"30%"}}>
                     <img src={"data:image/jpeg;base64,"+el.slikaBytesBase64} style={{"width":"100px","height":"100px"}}/>
+                    </div>
                 </div>);
             })}
-
-            <button onClick={()=>DodajProizvodeRezervaciji()}>Potvrdi</button>
+            <div class="float-child" style={{width:"100%"}}>
+            <button class="btn btn-primary" onClick={()=>DodajProizvodeRezervaciji()}>Potvrdi</button> </div>
         </div>
     );
     

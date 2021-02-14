@@ -30,21 +30,29 @@ function CreatePutnikForm(){
     if(loading) return <Spinner/>
 
     return(
-        <div>
+        <div className={"formCreate"} class="float-container" style={{textAlign:"left"}}>
           {showSpinner && <Spinner />}
-      <label>JMBG: </label><input type="text" onChange={(event)=>setJmbg(event.currentTarget.value)}/>
-      {(jmbg.length==0||jmbg.length!=13)&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
-      <label>Ime: </label><input type="text" onChange={(event)=>setIme(event.currentTarget.value)}/>
-      {ime.length==0&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
-      <label>Prezime: </label><input type="text" onChange={(event)=>setPrezime(event.currentTarget.value)}/>
-      {prezime.length==0&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
-      <label>Godina rodjenja: </label><input type="number" onChange={(event)=>setGodRodjenja(event.currentTarget.value)}/>
-      {(godRodjenja.length!=4)&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
-      <label>Pol: </label>&nbsp;&nbsp;&nbsp;
+          <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>JMBG: </label><input type="text" class="form-control" onChange={(event)=>setJmbg(event.currentTarget.value)}/>
+      {(jmbg.length==0||jmbg.length!=13)&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/> </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Ime: </label><input type="text" class="form-control" onChange={(event)=>setIme(event.currentTarget.value)}/>
+      {ime.length==0&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/> </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Prezime: </label><input type="text" class="form-control" onChange={(event)=>setPrezime(event.currentTarget.value)}/>
+      {prezime.length==0&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/> </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Godina rodjenja: </label><input type="number" class="form-control" onChange={(event)=>setGodRodjenja(event.currentTarget.value)}/>
+      {(godRodjenja.length!=4)&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/> </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Pol: </label>&nbsp;&nbsp;&nbsp;
       <label>M&nbsp;</label><input name="polRB" type="radio" value="M" onChange={(event)=>setPol(event.target.value)} />&nbsp;&nbsp;
       <label>Z&nbsp;</label><input name="polRB" type="radio" value="Z" onChange={(event)=>{setPol(event.target.value);}} />&nbsp;&nbsp;
-      {(pol=="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
-      <label>Slika pasosa:</label>
+      {(pol=="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/> </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Slika pasosa:</label>
+      </div>
+      <div class="float-child" style={{width:"100%"}}>
       <ImagePicker
         extensions={['jpg', 'jpeg', 'png']}
         maxSize={5}
@@ -52,25 +60,28 @@ function CreatePutnikForm(){
         onChange={base64 => {setPassportBase64(base64.slice(23,base64.length));setFullPassportBase64(base64);}}
         onError={errMsg => alert(errMsg)}
       >
-        <button>
+        <button class="btn btn-light">
           Pronadji sliku
         </button>
       </ImagePicker>
       <img src={fullPassportBase64} style={{"width":"250px","height":"250px"}}></img>
       {(passportBase64=="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
       <br/><br/>
-      <label>PCR test:</label>
+      </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>PCR test:</label>
       <ReactFileReader fileTypes={[".pdf",".docx"],".png",".jpg",".jpeg"} base64={true} multipleFiles={false} handleFiles={(files)=>{
         setPcrTestFileName(files.fileList[0].name);
         let indOfComma=files.base64.indexOf(",");
         setPcrTestBase64(files.base64.slice(indOfComma+1,files.base64.length));
       }}>
-           <button className='btn'>Pronadji fajl</button>
+           <button className='btn' class="btn btn-light">Pronadji fajl</button>
       </ReactFileReader> <label>{pcrTestFileName}</label>
       {(pcrTestBase64=="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
       <br/><br/>
-
-      <label>Tip prtljaga(Kolicina):</label>
+      </div>
+      <div class="float-child" style={{width:"100%"}}>
+      <label style={{color:"#3399FF"}}>Tip prtljaga(Kolicina):</label>
       <div class="kontejnerPrtljaga">
         <div style={{"display":"flex"}}>
         <input name="prtljagRB" type="radio" value="mali" onChange={(event)=>setPrtljag(event.target.value)} />
@@ -88,8 +99,9 @@ function CreatePutnikForm(){
           <p>Veliki (50-100kg)</p>
         </div>
       </div>
+      </div>
       <br/><br/>
-      <button disabled={
+      <button class="btn btn-dark" disabled={
         ((jmbg.length==13)&&ime.length>0&&prezime.length>0&&godRodjenja.length==4&&pol!=""&&passportBase64!=""&&pcrTestBase64!=""?false:true)
       } onClick={()=>CreateReservationAndPutnik()}>Dalje</button>
       </div>

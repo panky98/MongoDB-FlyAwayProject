@@ -14,18 +14,23 @@ function AvioKompanije() {
     console.log(kompanije);
 
     return (
-        <div class="row">
+        <div className={"formCreate"} class="row float-container" style={{textAlign:"center"}}>
         {kompanije.map(k=>
             {
                 return(
-                    <div class="col-sm-6" className={k.id}>
+                    <div class="col-sm-6 float-child" style={{width:"100%"}} className={k.id}>
                         <div class="card">
-                            <div class="card-body">
+                            <div className={"formCreate"} class="float-container card-body" style={{textAlign:"center"}}>
+                            <div class="float-child" style={{width:"100%"}}>
                                 <h5 class="card-title">Naziv:{k.naziv}</h5>
+                                </div>
+                                <div class="float-child" style={{width:"100%"}}>
                                 <h5 class="card-title">Grad predstavnistva: {k.gradPredstavnistva}</h5>
-                                <p class="card-text">Godina osnivanja:{k.godinaOsnivanja}</p>
-  
-                                <Link to={`/avioKompanije/${k.id}`} className="btn btn-primary">Saznaj vise</Link>
+                                </div>
+                                <div class="float-child" style={{width:"100%"}}>
+                                <p class="card-text">Godina osnivanja:{k.godinaOsnivanja}</p> </div>
+                                <div class="float-child" style={{width:"100%"}}>
+                                <Link to={`/avioKompanije/${k.id}`} className="btn btn-primary">Saznaj vise</Link> </div>
                             </div>
                         </div>
                     </div>

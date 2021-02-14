@@ -12,6 +12,9 @@ function Home() {
                 <img class="d-block w-100" src="carousel2.jpg"/>
                 </div>
                 <div class="carousel-item">
+                <img class="d-block w-100" src="carousel3.jpg"/>
+                </div>
+                <div class="carousel-item">
                 <img class="d-block w-100" src="carousel4.jpg"/>
                 </div>
             </div>

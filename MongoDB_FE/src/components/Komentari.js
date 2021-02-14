@@ -44,7 +44,7 @@ function Komentari({avioKompanija}) {
             <div class="col-md-8">
                 <div class="page-header">
                     <h1><small class="pull-right">{komentari.length}</small> Komentari </h1>
-                    <button onClick={()=>setPrikaziDodajKomentar(!prikaziDodajKomentar)}>{tekstDugme}</button>
+                    <button class="btn btn-second" onClick={()=>setPrikaziDodajKomentar(!prikaziDodajKomentar)}>{tekstDugme}</button>
                     {!prikaziDodajKomentar && <DodajKomentar 
                                                 ime={ime}
                                                 prezime={prezime} 

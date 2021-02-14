@@ -12,12 +12,16 @@ function StatusRezervacija()
     const [status,setStatus]=useState("");
 
     return(
-        <div>
+        <div className={"formCreate"} class="float-container" style={{textAlign:"left"}}>
             {showSpinner && <Spinner />}
-            <label>Kod rezervacije: </label> <input type="text" onChange={(event)=>setKodRez(event.currentTarget.value)}/>
-            <button onClick={()=>Proveri()}>Proveri</button>
-
-            <label>{status}</label>
+            <div class="float-child" style={{width:"100%"}}>
+            <label style={{color:"#3399FF"}}>Kod rezervacije: </label> 
+            <input class="form-control" style={{width:"20%"}} type="text" onChange={(event)=>setKodRez(event.currentTarget.value)}/>
+           </div>
+            <div class="float-child" style={{width:"100%"}}>
+            <button class="btn btn-primary" onClick={()=>Proveri()}>Proveri</button>
+            </div>
+            <h3 style={{color:"#3399FF", marginLeft:"15px"}}>{status}</h3>
         </div>
     );
 

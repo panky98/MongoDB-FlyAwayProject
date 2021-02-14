@@ -13,11 +13,15 @@ function InfoRezervacija()
 
     console.log(rezervacija);
     return(
-        <div>
-            <p>Kod rezervacije: {rezervacija.kodRezervacije} BITAN ZA PROVERU STATUSA</p><br/>
-            <p>Status rezervacije: {rezervacija.status}</p>
-             <div>
-                 <p>Lista proizvoda: </p><br/>
+        <div className={"formCreate"} class="float-container" style={{textAlign:"center"}}>
+             <div class="float-child" style={{width:"100%"}}>
+            <p >Kod rezervacije: {rezervacija.kodRezervacije} BITAN ZA PROVERU STATUSA</p><br/>
+           </div>
+           <div class="float-child" style={{width:"100%"}}>
+            <p style={{color:"#3399FF"}}>Status rezervacije: {rezervacija.status}</p>
+            </div>
+            <div class="float-child" style={{width:"100%"}}>
+                 <p style={{color:"#3399FF"}}>Lista proizvoda: </p><br/>
                  {rezervacija.proizvodi.map((el=>{
                      return <div>{el}</div>
                  }))}

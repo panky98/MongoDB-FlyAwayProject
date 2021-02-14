@@ -23,14 +23,16 @@ function Letovi() {
     console.log(pathUpita);
 
     return (
-        <div>
-            <select style={{width:"80%", height:"30px"}} class="form-control" value={tipLeta} onChange={(ev)=>setTipLeta(ev.target.value)}>
+        <div className={"formCreate"} class="float-container" style={{textAlign:"center"}}>
+            <div class="float-child" style={{width:"100%"}}>
+            <select style={{width:"100%", height:"30px"}} class="form-control" value={tipLeta} onChange={(ev)=>setTipLeta(ev.target.value)}>
 
                 <option key={"svi"} value={"svi"}>Svi letovi</option>
                 <option key={"gotov"} value={"gotov"}>Gotovi</option>
                 <option key={"trenutni"} value={"trenutni"}>Letovi na raspolaganju</option>
             </select>
-        <div class="row">
+            </div>
+        <div class="row" class="float-child" style={{width:"100%"}}>
         {letovi.map(l=>
             {
                 return(
