@@ -10,7 +10,7 @@ function DodajKomentar({avioKompanija,ime, prezime, tekstKomentara, brZvezdica, 
     {
        
         setShowSpinner(true);
-        alert(ime + " " + prezime + " " + tekstKomentara + " " + brZvezdica);
+        //alert(ime + " " + prezime + " " + tekstKomentara + " " + brZvezdica);
 
         const obj={
             ime:ime,
